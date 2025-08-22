@@ -198,3 +198,198 @@ Cuando se quiere contener valores "enclose" para hacer una oración:
 `"Ella dijo 'hola'", el dijo``
 
 Para usar el single quote dentro de un string de single quotes, puede usar el escape \'
+
+
+3.3.2) Escape Sequences in String Literals
+Con el "\" puede representar tambien otros elementos como:
+
+\0 => NUL character
+\b => backspace
+\t => horizontal tab
+\n => newline
+\v => vertical tab
+\f => form feed
+\r => carrieage return
+\" => double quote
+\' => single quote
+\\ => backslash quote
+\xnn => Unicode con hexagesimal "nn" (2 digitos)
+\unnnn => Unicode con hexagesimal "nnnn" (4 digitos)
+\u{n} => Unicode con hexagesimal "nn" (de 1 a 6 digitos)
+
+En ES5, un backslash "\" antes de una nueva linea, da continuidad al string
+
+Ejemplo:
+
+'Hola a todos, \
+mi nombre es Claudio\
+, un gusto!'
+
+
+3.3.3) Working with Strings
+Se puede usar el operador '+' con los strings:
+let prueba = 'hola' + 'soy claudio'
+
+Los strings puede igualarse con el simbolo "===" y "!==".
+
+Se puede usar la propiedad "length" de los string para saber cuantos elementos de 16bits contiene:
+
+prueba.lenght; \\ 15
+
+Adicionalmente, JS contiene una API completa de funcines para strings.
+
+Recordar que string son immutable, por lo que funciones como "replace()" o "toUpperCase()" crean un nuevo string.
+
+Incluso, como string son array, si uno accede a un elemento, no permitirá modificarlo, ya que los string son algo como "read-only"
+
+3.3.4) Template Literals
+
+Para esto se puede utilizar los Backsticks qué sirven para poder dentro generar plantíos de cadenas de texto por ejemplo lo siguiente:
+
+let nombre = 'Claudio';
+let greeting = `Hola ${nombre}, un gusto saludarte' // Hola Claudio, un gusto saludarte
+
+Todo lo que esta entre el dolar y las llaves se reemplaza en la cadena de texto.
+
+Tagged template literals:
+Se puede poner una metodo antes de los ``, esto hara que el metodo que reciba el valor tenga los texto fijos (base) y los valores tipo variables (interpolados)
+
+ejemplo:
+
+// Una función muy simple que recibe las partes y valores
+function simpleTag(strings, ...values) {
+  console.log("Partes del texto:", strings);
+  console.log("Valores:", values);
+  return "Resultado final";
+}
+
+let nombre = "Carlos";
+let edad = 20;
+
+// Usamos la función como tag
+console.log(simpleTag`Hola ${nombre}, tienes ${edad} años`);
+
+// salida
+/*
+Partes del texto: [ 'Hola ', ', tienes ', ' años' ]
+Valores: [ 'Carlos', 20 ]
+Resultado final
+*/
+
+3.4) Boolean Values
+
+Indican si es verdad (true) o falsedad (false).
+Los siguientes valores indican falso:
+- undefined
+- null
+- 0
+- -0
+- NaN
+- "" // string vacio
+
+3.5) null and undefined
+
+undefined => indica que no tiene valor asignado. Se declara una variable pero no ha sido inicializada
+ejemplo: 
+
+let x;
+console.log(x); // => undefined
+
+let persona = {};
+console.log(persona.nombre); // => undefined
+
+
+null => indica la ausencia intencional de valor. Se hace intencionalmente. Es como una nota que dice "nada". 
+
+Ejemplo:
+let objeto = null;   // El objeto está "vacío" a propósito
+
+"null" es un keyword propio del lenguaje.
+"undefined" es una variable constante global.
+
+El uso de "==" sobre estos valores es considera como igual, no los distingue. EN CAMBIO, "===" (el estricto), si lo distingue.
+
+
+3.6) Symbols
+
+cuando uses "Symbol" recuerda que no trae los mismos valores si lo vuelves a llamar incluso si le pasan los mismos argumentos.
+Con esto uno se podría despreocupar si accidentalmente puede haber una sobre escritura.
+
+Retorna siempre un valor unico. Opcionalmente se puede pasar un string como argumento. Esto no significa que si yo llamo al Symbol con el string pueda retornar el mismo valor, SERÁ DIFERENTE.
+
+Para retornar el valor de el symbol generado con argumento, JS tiene un Symbol Registry para almacenar los Symbols que se van generando.
+
+Para obtener el symbol generado, se emplea el metodo "Symbol.for()" esto te retornará el symbol genera segun el parametro que le enviaste como argumento. En caso no encuentre el valor buscado, lo creará.
+
+3.7) The Global Object
+
+Cuándo se inicializa un programa en JavaScript crea funciones y constantes globales. Algunas de ellas son las siguinetes:
+
+* Global constants:
+- undefined
+- Infinity
+- NaN
+
+* Global functions:
+- isNaN()
+- parseInt()
+- eval()
+
+* Constructor functions:
+- Date()
+- RegExp()
+- String()
+- Object()
+- Array()
+
+* Global object:
+- Math
+- JSON
+
+Segun cada plataforma, el objeto global es diferente en JS:
+* Node => global
+* Web browser => window
+* Web worker => self
+
+A partir del ES2020, se definió una variable empleada para toda plataforma la cual es "globalThis".
+
+3.8)  Immutable Primitive Values and Mutable Object
+References
+
+Cómo se saben los valores primitivos son inmutables entre ellos están los números, boolean, string, etc.
+En cambio los Objects son mutables.
+
+ejemplo: 
+
+let o = {x: 1};
+o.x = 2; // modifica el valor de x
+o.y = 3; // incluso crea una nueva propiedad con su valor
+
+Hay diferencia de los productivos los objetos no pueden compararse con igualdad, incluso si tienen las mismas propiedades.
+
+La forma como compararas los objetos es mediante la referencia de la misma variable que almacena el objeto. De igual manera con los arrays.
+
+Ejemplo:
+
+let a = [];
+let b = a;
+b[0] = 1;
+a[0]  // 1
+a === b // true
+
+de esta manera se hace una asignacion por referecia de objetos o array. Si quieres hacer una copia del objeto, debe copiar explicitamente los valores. En ES6 se habilitó la funcion "Array.from()".
+Ejm:
+let a = ["a", "b"];
+let c = Array.from(a);
+
+3.9) Type Conversions
+
+Considere que hay ciertas reglas cuando JS hace una conversion del tipo de dato. No siempre es certero. Ejemplo:
+
+
+10 + " objects" // => "10 objects": Lo convierte todo a texto
+"7" * "4" // => 28: lo interpreta como numero y hace la sumatoria
+let n = 1 - "x"; // n == NaN  , x no lo interpreta como numero y no puede hacer la operación
+n + " objects" // => "NaN objects" , n es NaN asi que no puede hacer la conversion a texto.
+
+
