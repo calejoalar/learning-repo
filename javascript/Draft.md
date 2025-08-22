@@ -192,3 +192,9 @@ Cada caracter de un string tiene 16bits contenidos.
 Se puede iterar con un loop.
 
 3.3.1) String Literals
+
+Se puede usar los simbolos ' , " y `, para representar los strings.
+Cuando se quiere contener valores "enclose" para hacer una oración:
+`"Ella dijo 'hola'", el dijo``
+
+Para usar el single quote dentro de un string de single quotes, puede usar el escape \'

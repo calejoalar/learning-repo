@@ -1,4 +1,4 @@
-# 📘 Notas: 21/08/25
+# 📘 Notas de libro: Javascript - The Definitive Guide (7ma edición)
 
 ## 2.2) Comments
 Los comentarios en JavaScript se escriben de la siguiente manera:
