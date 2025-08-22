@@ -1,7 +1,9 @@
-Notas: 21/08/25
+# 📘 Notas: 21/08/25
 
-2.2) Comments:
-Los comentarios se escriben de esta manera
+## 2.2) Comments
+Los comentarios en JavaScript se escriben de la siguiente manera:
+
+```js
 /* Text */
 
 // Text
@@ -10,185 +12,222 @@ Los comentarios se escriben de esta manera
  * Text
  *
  */
+```
 
- 2.3) Literals
- Son los valores que aparecen directamente en el programa
+---
 
- 2.4) Identifiers and Reserved Words
- Los nombres de las variables pueden empezar con:
- - letras
- - guion bajo (_)
- - simbolo de dolar ($)
+## 2.3) Literals
+Son los valores que aparecen directamente en el programa.
 
- Los numeros no estan permitidos para que inicie el nombre de una variables (ej: let 3prueba = 3;)
+---
 
+## 2.4) Identifiers and Reserved Words
 
-2.4.1) Reserved words:
-Evitar usar las siguientes palabras para llamar variables, constantes, etc:
+### Identifiers
+Los nombres de las variables pueden empezar con:
+- Letras
+- Guion bajo (`_`)
+- Símbolo de dólar (`$`)
 
-as | const | export | get | null | target | void |
-async | continue | extends | if | of | this | while |
-await | debugger | false | import | return | throw | with |
-break | default | finally | in | set | true | yield |
-case | delete | for | instanceof | static | try |
-catch | do | from | let | super | typeof |
-class | else | function | new | switch | var |
-enum | implements | interface | package | private | protected | public |
-arguments | eval |
+❌ Los números **no están permitidos** al inicio del nombre de una variable:  
 
-2.5) Unicode
-En javascript se puede usar para llamar caracteres a otros caracteres diferente a letras: π 
+```js
+let 3prueba = 3; // Inválido
+```
 
-2.5.1) Unicode Escape Sequences
-Se puede usar caracteres de escape para referirse a una misma variable. Ejemplo:
+---
 
+### 2.4.1) Reserved Words
+Evitar usar las siguientes palabras para variables, constantes, etc:
+
+```
+as | const | export | get | null | target | void
+async | continue | extends | if | of | this | while
+await | debugger | false | import | return | throw | with
+break | default | finally | in | set | true | yield
+case | delete | for | instanceof | static | try
+catch | do | from | let | super | typeof
+class | else | function | new | switch | var
+enum | implements | interface | package | private | protected | public
+arguments | eval
+```
+
+---
+
+## 2.5) Unicode
+En JavaScript se puede usar Unicode para nombrar variables con caracteres distintos a letras latinas.  
+Ejemplo:  
+
+```js
+let π = 3.1416;
+```
+
+### 2.5.1) Unicode Escape Sequences
+Se pueden usar secuencias de escape Unicode:
+
+```js
 let café = 5;
 caf\u00e9
 caf\u{E9}
+```
 
+### 2.5.2) Unicode Normalization
+⚠️ Precaución: Cuando se trabaja con caracteres **no ASCII**, puede haber problemas de normalización:  
+- Ejemplo: `é` puede lucir igual, pero tener diferentes códigos Unicode.  
+- Esto puede generar variables diferentes aunque parezcan idénticas.  
 
-2.5.2) Unicode Normalization
-Tener en cuenta que cuando se trabaja con caracteres No ASCII, puede tener problemas porque en Unicode un caracteres puede lucir igual (ej: é), pero puede tener diferentes Unicode, y hacer referencia a diferentes variables que no son visibles desde la pantalla o editor de texto.
-- De preferencia, no utilizar NO-Ascii caracteres.
+👉 Recomendación: **evitar caracteres no ASCII en identificadores.**
 
+---
 
-Chapter 3: Types, Values, and Variables
-3.1) Overview and Definitions
-Las categorias de tipos de datos que hay son:
-- primitivos
-- objetos
+# 📖 Chapter 3: Types, Values, and Variables
 
-los tipos de datos primitivos son (immutables):
-- numbers
-- strings <= ojo: es immutable
-- boolean
-- null (no tienen metodos)
-- undefined (no tienen metodos)
-- symbol
+## 3.1) Overview and Definitions
+Las categorías de tipos de datos en JS son:
+- **Primitivos (inmutables)**
+  - `number`
+  - `string` (⚠️ inmutable)
+  - `boolean`
+  - `null` (sin métodos)
+  - `undefined` (sin métodos)
+  - `symbol`
+- **Objetos (mutables)**
+  - Colección de propiedades (`name: value`)  
+  - Sin orden específico
 
-objetos:
- Es una coleccion de "properties". Cada propiedad tiene un "name" y un "value" (puede ser un valor primitivo u otro objeto) 
- Es una collección sin orden
+### Estructuras
+- **Arrays** → Colección ordenada de datos.  
+- **Set** → Conjunto de valores únicos.  
+- **Map** → Mapeo clave → valor.  
 
-arrays:
- Es un coleccion ordenada de datos
+### Notas
+- JS cuenta con **Garbage Collection** para memoria.  
+- Los **objetos son mutables**, los **primitivos inmutables**.  
+- Constantes → `const`  
+- Variables → `let`  
+- Comparaciones → usar `===` (estricta).  
 
-set:
- Representa un conjunto de valores
+---
 
-map:
- Representa un mapeo de una "key" y su "value"
+## 3.2) Numbers
+- Representan enteros y números reales aproximados.  
+- Son de **64 bits flotante** (IEEE 754, tipo *double*).  
+- Rango aproximado:
+  - Reales: ±1.7976931348623157 × 10^308  
+  - Enteros exactos: −2^53 a 2^53  
 
+👉 Usar fuera de este rango puede producir **pérdida de precisión**.  
 
-JS tiene un Garbage Collection de gestion de memoria.
+---
 
-Los objetos son "mutable" (puede cambiar sus valoers de las propiedades o del array) y los tipos primitivos son "immutable" (sus valores no cambia).
+### 3.2.1) Integer Literals
+- **Decimal**: normal (`123`).  
+- **Hexadecimal**: prefijo `0x` o `0X`.  
+- **Binario**: prefijo `0b`.  
+- **Octal**: prefijo `0o`.  
 
-Las constantes son declaradas como "const"
-Las variables son declaradas como "let"
+---
 
-Se debe usar "===" para la igualdad (el "==" hace un inferencia de la igualdad, es decir, lo interpreta al modo de JS)
+### 3.2.2) Floating-Point Literals
+Un número real contiene un punto decimal:  
 
-3.2) Numbers
+```js
+3.23
+6.23e23 // = 6.23 × 10^23
+1.42E-32 // = 1.42 × 10^-32
+```
 
-Sirve para representar "enteros" y aproximar numeros "reales"
-Tienen una capacidad de 64bits flotante (en otros lenguajes se les dice "double" ).
-Es decir que puede escribir decimales desde desde ±1.7976931348623157 × 10^308 y pequeños como ±5 × 10^−324.
+---
 
-Por otro lado, los enteros, puede tomarlos desde:
-−9,007,199,254,740,992 (−2^53) hasta 9,007,199,254,740,992 (2^53)
+### 3.2.3) Arithmetic in JavaScript
+Operadores:
+```js
++   // suma
+-   // resta
+*   // multiplicación
+/   // división
+%   // módulo
+**  // potencia
+```
 
-Si usas enteros fuera de estos limites, puede que pierdas precisión.
-Numerical Literal se les dice a los numeros que se muestran directamente.
+Funciones avanzadas → `Math`  
 
-3.2.1) Integer literals
+#### Errores posibles
+- `Infinity` → resultado demasiado grande.  
+- `-Infinity` → resultado demasiado grande negativo.  
+- **Underflow** → número cercano a `0` (ej. `-0`).  
+- **NaN (Not a Number)** →  
+  - `Infinity / Infinity`  
+  - `Math.sqrt(-1)`  
+  - `"hola" / 34`  
 
-Los Literal en JS estan en base 10.
-Para usar hexadecimales se usa "0x" o "0X" al inicio, luego del numero hexadecimal.
-Si quieres usar binario, usa el prefijo "0b" 
-Si quieres usar octal, usa el prefijo "0o"
+#### Representaciones
+```js
+Number.POSITIVE_INFINITY
+Number.NEGATIVE_INFINITY
+Number.NaN
+```
 
-3.2.2) Floating-pont literals
-Un numero real es aquel que tiene un punto decimal (ej: 3.23)
-tambien se puede expresar numeros reales asi:
-(la "e" o "E" significa multiplicado por 10 y elevado a la "n")
-6.23e23
-1.42E-32
+👉 `NaN` no es igual ni a sí mismo. Usar:  
+```js
+Number.isNaN(x)
+Number.isFinite(x)
+```
 
-3.2.3) Arithmetic in JavaScript
-Operadores disponibles:
-+, -, /, *, % (modulo: es el resto de una division), ** (representa la potencia)
-Para mas funciones complejas, JS tiene el objeto "Math"
+#### Zero y -Zero
+```js
+let zero = 0;
+let negz = -0;
 
-Hay posibles errores que puedes presentar:
-  Infinity (cuando el numero resultante es mas grande de la capacidad del tipo de dato)
-  - Infinity (igual que el anterior pero en negativo)
+zero === negz       // true
+1/zero === 1/negz   // false (Infinity vs -Infinity)
+```
 
-Tambien se tiene el "Underflow", que es cuando el numero resultante esta muy cerca a "0" y lo mismo, pero en negativo (a esto se le llama "negative zero", no es indistinguible desde del 0 normal)
+---
 
-Puedes obtener el valor infitivo de la siguiente forma:
-- si divides 0 entre 0
+### 3.2.4) Binary Floating-Point and Rounding Errors
+JS usa aproximaciones en operaciones decimales → cuidado con comparaciones de igualdad.
 
-Puedes obtener como resultado "NaN" (Not a Number) si haces lo siguiente:
-- Si divides Infinity entre Infinity
-- Le haces Raiz cuadrada a un numero negativo
-- Usas operadores aritmeticos para valores no numericos y no pueden convertirse a numero ("hola"/34)
+---
 
-Otras maneras de escribir "Infinity" y "NaN":
-- Number.POSITIVE_INFINITY
-- Number.NEGATIVE_INFINITY
-- Number.NaN
+### 3.2.5) BigInt (Arbitrary Precision Integers)
+Introducido en **ES2020**.  
+Permite enteros muy grandes (no enfocado en criptografía).  
 
-Una caracteristica de "NaN" no se le puede comparar con una igual (Ej. x === NaN  o  Number.isNaN(x) )
-
-En su lugar, puedes usar "Number.isFinite()" que indica si es un numero, diferente a NaN, Infinity o -Infinity.
-
-Puedes hacer diferencia de un zero regular y un negative zero, de la siguiente forma:
-
-let zero = 0; // Regular zero
-let negz = -0; // Negative zero
-zero === negz // => true: zero and negative zero are equal
-1/zero === 1/negz // => false: Infinity and -Infinity are not equal
-
-3.2.4) Binary Floating-Point and Rounding Errors
-
-JS maneja en sus operaciones aproximaciones para llegar a los numeros decimales, por lo que se debe tener cuidado de hacer aritmetica con esta asginaciones de valores, en especial, hacer igualdades con ellos (porque son inprecisas)
-
-3.2.5) Arbitrary Precision Integers with BigInt
-
-En ES2020, salio un tipo de dato numero llamado "BigInt" que tiene una capacidad gigante para numeros enteros. No esta enfocado a la cryptografia.
-Por defecto los BigInt utiliza la base 10.
-Se escribe de la sigueinte forma:
-
+```js
 123n
 34n
-
-Puedes convertir un enteros de JS a BigInt asi:
 BigInt(2323)
+```
 
-Los bigtint Trabaja con operaciones aritmetica entre otros numeros BigInt.
-Saldra error si tu haces una operacion aritmetica de BigInt con un numero regular de JS, ejemplo:
-233n*3
+⚠️ Reglas:
+- Solo operaciones entre **BigInt y BigInt**.  
+- Comparación estricta distingue tipo:  
+  ```js
+  0 == 0n   // true
+  0 === 0n  // false
+  ```
 
-Lo que no genera problemas es los operadores de comparación como:
-1n < 2 //true
-5n > 10 //false
-0 == 0n //true
-0 === 0n //falso, porque esta igualdad tambien compara el tipo de dato
+---
 
+### 3.2.6) Dates and Times
+JS soporta fechas y tiempos con `Date`.  
 
-3.2.6) Dates and Times
-JS tambien puede usar fechas y horas. 
-- Date.now()
-- new Date()
-- now.getTime()
+```js
+Date.now()
+new Date()
+date.getTime()
+```
 
-Tambien se tiene una representación como "timestamp".
+Internamente se manejan como **timestamps**.
 
-3.3) Text
+---
 
-Los String son immutable.
-Cada caracter de un string tiene 16bits contenidos.
-Se puede iterar con un loop.
+## 3.3) Text
 
-3.3) Text
+- **Strings** son **inmutables**.  
+- Cada carácter se representa con unidades de 16 bits.  
+- Se puede iterar con loops.  
+
+### 3.3.1) String Literals
+📌 (Sección incompleta en el apunte original, aquí se pueden agregar ejemplos de comillas simples, dobles y backticks).
